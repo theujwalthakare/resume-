@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujwal C. Thakare - Cybersecurity Professional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A single-page application with a top navigation bar for easy access to key sections: a professional summary, an interactive skills dashboard, a project showcase, and contact information. This structure allows recruiters to quickly grasp the candidate's profile and dive deeper into specific areas of interest. The interactive skills chart is chosen to make the technical qualifications more engaging and quantifiable than a static list, improving user engagement and information retention. -->
+    <!-- Visualization & Content Choices: 
+        - Summary/Education/Languages -> Goal: Inform -> Presentation: Styled text blocks -> Interaction: None -> Justification: Clear, direct presentation for core information.
+        - Skills -> Goal: Organize & Compare -> Presentation: Interactive Horizontal Bar Chart (Chart.js) -> Interaction: Filter buttons to switch between skill categories (Cybersecurity, Programming, Platforms), hover tooltips for details. -> Justification: Transforms a list into a dynamic, visually appealing, and easily digestible format. Highlights proficiency in key areas.
+        - Projects -> Goal: Demonstrate -> Presentation: Styled cards in a grid layout -> Interaction: Clickable links to live project/repo. -> Justification: Organizes detailed project information cleanly and provides direct access to proof of work.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfcfb;
+            color: #333;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="font-bold text-xl text-gray-800">Ujwal C. Thakare</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#summary" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Summary</a>
+                        <a href="#skills" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Skills</a>
+                        <a href="#projects" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Projects</a>
+                        <a href="#contact" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <section id="summary" class="pt-16 -mt-16 mb-24 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-4">Aspiring Cybersecurity Professional</h1>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                With a strong academic foundation in Computer Science and hands-on project experience in network security, I am passionate about leveraging my technical expertise to contribute to real-world cybersecurity challenges. Proficient in multiple programming languages and security tools.
+            </p>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-24">
+            <div class="lg:col-span-1 space-y-8">
+                 <div class="bg-white p-6 rounded-xl border border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Education</h3>
+                    <p class="font-medium text-gray-800">Savitribai Phule Pune University</p>
+                    <p class="text-gray-600">Bachelor of Science, Computer Science</p>
+                    <p class="text-sm text-gray-500 mt-1">Expected Graduation: June 2025</p>
+                    <p class="text-sm text-gray-500">GPA: 7.93</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Languages</h3>
+                    <ul class="space-y-1 text-gray-600">
+                        <li><strong>English:</strong> Professional Proficiency</li>
+                        <li><strong>Hindi:</strong> Native Proficiency</li>
+                        <li><strong>Marathi:</strong> Native Proficiency</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="skills" class="lg:col-span-2 pt-16 -mt-16">
+                 <div class="bg-white p-6 rounded-xl border border-gray-200 h-full">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-1 text-center">Technical Skills</h2>
+                    <p class="text-center text-gray-500 mb-4">An interactive overview of my technical abilities. Select a category to explore.</p>
+                    <div class="flex justify-center space-x-2 mb-4">
+                        <button id="cybersecurity-btn" class="skill-btn bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium">Cybersecurity</button>
+                        <button id="programming-btn" class="skill-btn bg-gray-100 text-gray-800 px-4 py-2 rounded-full text-sm font-medium">Programming</button>
+                        <button id="platforms-btn" class="skill-btn bg-gray-100 text-gray-800 px-4 py-2 rounded-full text-sm font-medium">Platforms & Tools</button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section id="projects" class="pt-16 -mt-16 mb-24">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-2">Projects</h2>
+            <p class="text-center text-gray-500 mb-12 max-w-2xl mx-auto">I believe in learning by doing. Here are some of the key projects I've worked on to build and demonstrate my skills.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-xl border border-gray-200 flex flex-col">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Active Directory & Threat Detection Homelab</h3>
+                    <ul class="space-y-2 text-gray-600 list-disc list-inside flex-grow">
+                        <li>Engineered a full-scale cybersecurity homelab from scratch using virtual machines.</li>
+                        <li>Simulated a real-world enterprise environment to test defensive strategies and perform penetration attacks.</li>
+                        <li>Utilized Splunk to collect, analyze, and visualize security data for proactive threat detection.</li>
+                        <li>Developed practical skills in system administration, network monitoring, and security tool implementation.</li>
+                    </ul>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Splunk</span>
+                        <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Ubuntu Server</span>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Windows Server</span>
+                         <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Kali Linux</span>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-gray-200 flex flex-col">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Personal Website</h3>
+                    <ul class="space-y-2 text-gray-600 list-disc list-inside flex-grow">
+                        <li>Designed and developed a personal portfolio website to showcase projects and skills.</li>
+                        <li>Implemented front-end development practices using modern web technologies to create a responsive and user-friendly experience.</li>
+                    </ul>
+                     <div class="mt-4 flex flex-wrap gap-2">
+                        <span class="bg-sky-100 text-sky-800 text-xs font-medium px-2.5 py-0.5 rounded-full">React</span>
+                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Vite</span>
+                         <span class="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Bootstrap</span>
+                    </div>
+                    <a href="https://www.theujwalthakare.me/" target="_blank" rel="noopener noreferrer" class="inline-block mt-4 text-blue-600 hover:underline font-medium">
+                        View Website &rarr;
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer id="contact" class="bg-gray-100 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center">
+             <h2 class="text-2xl font-bold text-gray-900 mb-2">Get in Touch</h2>
+            <p class="text-gray-600 mb-6">I'm currently seeking internship opportunities. Let's connect!</p>
+            <div class="flex justify-center items-center space-x-6 text-gray-600">
+                 <a href="mailto:thakareujwal2025@gmail.com" class="hover:text-blue-600">thakareujwal2025@gmail.com</a>
+                 <span class="text-gray-300">|</span>
+                 <a href="https://www.linkedin.com/in/ujwal-thakare-300b25264/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600">LinkedIn</a>
+                 <span class="text-gray-300">|</span>
+                 <span>+91 8080541439</span>
+            </div>
+             <p class="mt-8 text-sm text-gray-500">&copy; 2025 Ujwal C. Thakare. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const skillsData = {
+                cybersecurity: {
+                    labels: ['Network Security', 'Threat Detection', 'Splunk', 'Kali Linux', 'System Architecture'],
+                    data: [85, 90, 80, 75, 70]
+                },
+                programming: {
+                    labels: ['Python', 'Java', 'C', 'SQL', 'Spring Boot'],
+                    data: [80, 75, 85, 70, 65]
+                },
+                platforms: {
+                    labels: ['Git & GitHub', 'Windows Server', 'Ubuntu', 'Vercel', 'React & Vite'],
+                    data: [90, 80, 85, 75, 70]
+                }
+            };
+
+            const ctx = document.getElementById('skillsChart').getContext('2d');
+            let skillsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: skillsData.cybersecurity.labels,
+                    datasets: [{
+                        label: 'Proficiency',
+                        data: skillsData.cybersecurity.data,
+                        backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: '#e5e7eb'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Proficiency: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const skillButtons = document.querySelectorAll('.skill-btn');
+            
+            function updateChart(category) {
+                skillsChart.data.labels = skillsData[category].labels;
+                skillsChart.data.datasets[0].data = skillsData[category].data;
+                skillsChart.update();
+
+                skillButtons.forEach(btn => {
+                    if (btn.id === `${category}-btn`) {
+                        btn.classList.remove('bg-gray-100', 'text-gray-800');
+                        btn.classList.add('bg-blue-100', 'text-blue-800');
+                    } else {
+                        btn.classList.remove('bg-blue-100', 'text-blue-800');
+                        btn.classList.add('bg-gray-100', 'text-gray-800');
+                    }
+                });
+            }
+
+            document.getElementById('cybersecurity-btn').addEventListener('click', () => updateChart('cybersecurity'));
+            document.getElementById('programming-btn').addEventListener('click', () => updateChart('programming'));
+            document.getElementById('platforms-btn').addEventListener('click', () => updateChart('platforms'));
+        });
+    </script>
+
+</body>
+</html>
